@@ -2,10 +2,12 @@ require('dotenv').config();
 const mongoose=require("mongoose")
 const express = require("express");
 const connectDB=require("./src/config/db")
+const analyticsRoutes=require("./src/routes/analyticsRoutes")
 connectDB()
 
 const app = express();
 app.use(express.json());
+app.use("/api",analyticsRoutes)
 
 app.get("/", (req, res) => {
   res.json({

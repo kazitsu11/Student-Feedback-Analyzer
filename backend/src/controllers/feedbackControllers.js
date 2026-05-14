@@ -1,5 +1,6 @@
 const Feedback = require("../models/feedback");
 const analyzeSentiment = require("../services/sentimentService");
+const extractThemes=require("../services/themeServices")
 
 const submitFeedback = async (req, res) => {
   try {
@@ -7,11 +8,12 @@ const submitFeedback = async (req, res) => {
     const { student, feedback } = req.body;
 
     const sentiment = analyzeSentiment(feedback);
-
+     const themes=extractThemes(feedback);
     const newFeedback = new Feedback({
       student,
       feedback,
       sentiment,
+      themes,
     });
 
     await newFeedback.save();
