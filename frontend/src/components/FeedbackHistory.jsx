@@ -12,8 +12,11 @@ export default function FeedbackHistory({ history }) {
   return (
     <section className={styles.section}>
       <div className={styles.sectionHeader}>
-        <h2 className={styles.sectionTitle}>Feedback Log</h2>
-        <span className={styles.count}>{history.length} entr{history.length === 1 ? 'y' : 'ies'}</span>
+        <h2 className={styles.sectionTitle}>Recent Feedback</h2>
+        <div className={styles.headerRight}>
+          <span className={styles.count}>{history.length} entr{history.length === 1 ? 'y' : 'ies'}</span>
+          <span className={styles.filterIcon}>⊟</span>
+        </div>
       </div>
 
       <div className={styles.list}>
@@ -43,13 +46,15 @@ function HistoryItem({ item }) {
 
       <div className={styles.content}>
         <div className={styles.row}>
-          <span className={styles.name}>{item.student}</span>
+          <div className={styles.nameRow}>
+            <span className={styles.name}>{item.student}</span>
+          </div>
           <span className={`${styles.badge} ${BADGE[item.sentiment] || BADGE.neutral}`}>
             {item.sentiment}
           </span>
+          <span className={styles.date}>{date}</span>
         </div>
         <p className={styles.feedbackText}>{item.feedback}</p>
-        <span className={styles.date}>{date}</span>
       </div>
     </div>
   )

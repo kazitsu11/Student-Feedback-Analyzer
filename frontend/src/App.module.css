@@ -1,17 +1,217 @@
+/* ══════════════════════════════════════════
+   App.module.css — Sidebar + Main layout
+══════════════════════════════════════════ */
+
 .app {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: var(--sidebar-width);
+  min-height: 100vh;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 20;
+}
+
+.sidebarBrand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.brandLogo {
+  width: 34px;
+  height: 34px;
+  background: var(--text-primary);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+
+.brandName {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.brandSub {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.sidebarNav {
+  flex: 1;
+  padding: 1rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  text-decoration: none;
+}
+
+.navItem:hover {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.navItemActive {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.navItemActive:hover {
+  background: var(--accent-hover);
+  color: #ffffff;
+}
+
+.navIcon {
+  font-size: 1rem;
+  width: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sidebarFooter {
+  padding: 1rem 0.75rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.submitFeedbackBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1rem;
+  background: var(--text-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  width: 100%;
+  margin-bottom: 0.5rem;
+  font-family: var(--font-body);
+}
+
+.submitFeedbackBtn:hover {
+  background: #1a1a2e;
+}
+
+/* ── Main area ── */
+.shell {
+  margin-left: var(--sidebar-width);
+  flex: 1;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
+/* ── Top bar ── */
+.topbar {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.topbarTitle {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.topbarMeta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.topbarIcon {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.topbarIcon:hover {
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+}
+
+/* ── Main content ── */
 .main {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
-  width: 100%;
+  gap: 1.5rem;
+  padding: 2rem;
   flex: 1;
 }
 
@@ -19,14 +219,15 @@
 .right {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
+/* ── Empty state ── */
 .empty {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 200px;
+  min-height: 160px;
   border: 1.5px dashed var(--border);
   border-radius: var(--radius-lg);
   background: var(--bg-secondary);
@@ -34,38 +235,67 @@
 
 .emptyText {
   color: var(--text-muted);
-  font-size: 0.875rem;
+  font-size: 0.825rem;
   font-family: var(--font-mono);
   letter-spacing: 0.03em;
 }
 
+/* ── Errors ── */
+.analyzeError {
+  margin: 0 2rem 1rem;
+  padding: 0.75rem 1.25rem;
+  color: var(--negative);
+  font-size: 0.825rem;
+  background: var(--negative-bg);
+  border: 1px solid var(--negative-border);
+  border-radius: var(--radius-md);
+}
+
+/* ── Analysis/Eval panels full-width ── */
+.panelWrap {
+  padding: 0 2rem 2rem;
+}
+
+/* ── Footer ── */
 .footer {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  padding: 1.25rem 1.5rem;
+  padding: 1.25rem 2rem;
   border-top: 1px solid var(--border);
   color: var(--text-muted);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-family: var(--font-mono);
-  letter-spacing: 0.04em;
+  background: var(--bg-secondary);
 }
 
-.analyzeError {
-  max-width: 1200px;
-  margin: 0 auto 1rem;
-  padding: 0.75rem 1.5rem;
-  color: var(--negative);
-  font-size: 0.85rem;
-  background: var(--negative-bg);
-  border: 1px solid rgba(224, 92, 92, 0.25);
-  border-radius: var(--radius-md);
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .main {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+  }
 }
 
 @media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .shell {
+    margin-left: 0;
+  }
+
   .main {
-    grid-template-columns: 1fr;
-    padding: 1.25rem 1rem;
+    padding: 1rem;
+  }
+
+  .topbar {
+    padding: 0 1rem;
+  }
+
+  .panelWrap {
+    padding: 0 1rem 1.5rem;
   }
 }

@@ -1,8 +1,13 @@
+/* ══════════════════════════════════════════
+   FeedbackHistory.module.css
+══════════════════════════════════════════ */
+
 .section {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
 }
 
 .sectionHeader {
@@ -14,14 +19,21 @@
 
 .sectionTitle {
   font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 400;
+  font-size: 1.15rem;
+  font-weight: 700;
   color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
 }
 
 .count {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-muted);
   background: var(--bg-input);
   border: 1px solid var(--border);
@@ -29,30 +41,37 @@
   padding: 0.2rem 0.6rem;
 }
 
+.filterIcon {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
 .list {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
-  max-height: 540px;
+  gap: 0.75rem;
+  max-height: 500px;
   overflow-y: auto;
-  padding-right: 0.25rem;
+  padding-right: 0.15rem;
 }
 
-/* ── individual item ── */
+/* ── Individual item ── */
 .item {
   display: flex;
   gap: 0.85rem;
   align-items: flex-start;
-  background: var(--bg-secondary);
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-lg);
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 1rem;
-  transition: border-color var(--transition);
+  background: var(--bg-secondary);
+  transition: border-color var(--transition), box-shadow var(--transition);
   animation: fadeUp 0.2s ease;
 }
 
 .item:hover {
   border-color: var(--border-hover);
+  box-shadow: var(--shadow-sm);
 }
 
 @keyframes fadeUp {
@@ -61,20 +80,20 @@
 }
 
 .avatar {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
   border-radius: 50%;
-  background: var(--accent-amber-glow);
-  border: 1px solid rgba(232, 168, 56, 0.25);
-  color: var(--accent-amber);
+  background: var(--accent-light);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: 0.7rem;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
 }
 
 .content {
@@ -82,7 +101,7 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.3rem;
 }
 
 .row {
@@ -92,9 +111,17 @@
   gap: 0.5rem;
 }
 
+.nameRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
 .name {
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
@@ -103,31 +130,32 @@
 
 .badge {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  border-radius: var(--radius-sm);
-  padding: 0.15rem 0.5rem;
+  letter-spacing: 0.06em;
+  border-radius: 99px;
+  padding: 0.15rem 0.55rem;
   white-space: nowrap;
+  font-weight: 600;
   border: 1px solid transparent;
 }
 
 .badgePositive {
-  color: var(--positive);
-  background: var(--positive-bg);
-  border-color: rgba(76, 175, 135, 0.25);
+  color: var(--positive-tag-text);
+  background: var(--positive-tag);
+  border-color: var(--positive-border);
 }
 
 .badgeNegative {
-  color: var(--negative);
-  background: var(--negative-bg);
-  border-color: rgba(224, 92, 92, 0.25);
+  color: var(--negative-tag-text);
+  background: var(--negative-tag);
+  border-color: var(--negative-border);
 }
 
 .badgeNeutral {
   color: var(--neutral);
-  background: var(--neutral-bg);
-  border-color: rgba(123, 143, 186, 0.2);
+  background: var(--neutral-tag);
+  border-color: var(--neutral-border);
 }
 
 .feedbackText {
@@ -142,7 +170,29 @@
 
 .date {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   color: var(--text-muted);
   margin-top: 0.1rem;
+}
+
+/* ── Load more ── */
+.loadMore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem;
+  margin-top: 0.5rem;
+  color: var(--accent);
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color var(--transition);
+  font-family: var(--font-body);
+  width: 100%;
+}
+
+.loadMore:hover {
+  color: var(--accent-hover);
 }

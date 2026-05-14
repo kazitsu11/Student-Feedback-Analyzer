@@ -5,19 +5,18 @@ export default function Header({ stats, onAnalyze, analyzing, onEvaluate, evalua
     <header className={styles.header}>
       <div className={styles.inner}>
         <div className={styles.brand}>
-          <span className={styles.tagline}>Education & Learning</span>
-          <h1 className={styles.title}>Student Feedback <em>Analyzer</em></h1>
+          <h1 className={styles.title}>Academic Sentiment <em>Dashboard</em></h1>
           <p className={styles.subtitle}>
-            Summarize themes, sentiment, and actionable insights across surveys.
+            Real-time AI analysis of student feedback across all faculties and courses for the current semester.
           </p>
         </div>
 
         <div className={styles.right}>
           <div className={styles.statsRow}>
-            <StatPill label="Total" value={stats.total} color="amber" />
-            <StatPill label="Positive" value={stats.positive} color="positive" />
-            <StatPill label="Neutral" value={stats.neutral} color="neutral" />
-            <StatPill label="Negative" value={stats.negative} color="negative" />
+            <StatPill label="Total Feedback" value={stats.total} color="amber" />
+            <StatPill label="Positive Sentiment" value={stats.positive} color="positive" />
+            <StatPill label="Neutral Sentiment" value={stats.neutral} color="neutral" />
+            <StatPill label="Negative Sentiment" value={stats.negative} color="negative" />
           </div>
 
           <div className={styles.btnRow}>
@@ -33,7 +32,7 @@ export default function Header({ stats, onAnalyze, analyzing, onEvaluate, evalua
                   Analyzing…
                 </>
               ) : (
-                'Run AI Analysis →'
+                '✦ AI Re-analyze'
               )}
             </button>
 
@@ -49,11 +48,10 @@ export default function Header({ stats, onAnalyze, analyzing, onEvaluate, evalua
                   Evaluating…
                 </>
               ) : (
-                '📊 Evaluate Pipeline'
+                'Export Report'
               )}
             </button>
           </div>
-
         </div>
       </div>
     </header>

@@ -4,44 +4,85 @@
   padding: 0;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 :root {
-  --bg-primary: #0f1117;
-  --bg-secondary: #181c27;
-  --bg-card: #1e2235;
-  --bg-input: #252a3d;
+  /* Light theme */
+  --bg-primary: #f5f5f7;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --bg-input: #f8f8fa;
+  --bg-sidebar: #ffffff;
 
-  --accent-amber: #e8a838;
-  --accent-amber-dim: #b8832a;
-  --accent-amber-glow: rgba(232, 168, 56, 0.12);
+  /* Accent */
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-light: rgba(79, 70, 229, 0.08);
+  --accent-border: rgba(79, 70, 229, 0.25);
 
-  --text-primary: #eef0f8;
-  --text-secondary: #8b90a8;
-  --text-muted: #555c7a;
+  /* Text */
+  --text-primary: #0a0a0b;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --text-inverse: #ffffff;
 
-  --border: rgba(255, 255, 255, 0.07);
-  --border-hover: rgba(232, 168, 56, 0.3);
+  /* Borders */
+  --border: #e5e7eb;
+  --border-hover: #d1d5db;
+  --border-strong: #c4c4c4;
 
-  --positive: #4caf87;
-  --positive-bg: rgba(76, 175, 135, 0.1);
-  --negative: #e05c5c;
-  --negative-bg: rgba(224, 92, 92, 0.1);
-  --neutral: #7b8fba;
-  --neutral-bg: rgba(123, 143, 186, 0.1);
+  /* Sentiment */
+  --positive: #16a34a;
+  --positive-bg: #f0fdf4;
+  --positive-border: #bbf7d0;
+  --positive-tag: #dcfce7;
+  --positive-tag-text: #15803d;
 
-  --font-display: 'DM Serif Display', Georgia, serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
-  --font-mono: 'DM Mono', 'Courier New', monospace;
+  --negative: #dc2626;
+  --negative-bg: #fef2f2;
+  --negative-border: #fecaca;
+  --negative-tag: #fee2e2;
+  --negative-tag-text: #b91c1c;
 
+  --neutral: #6366f1;
+  --neutral-bg: #eef2ff;
+  --neutral-border: #c7d2fe;
+  --neutral-tag: #e0e7ff;
+  --neutral-tag-text: #4338ca;
+
+  --amber: #d97706;
+  --amber-bg: #fffbeb;
+  --amber-border: #fde68a;
+
+  /* Typography */
+  --font-display: 'Syne', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  /* Radii */
+  --radius-xs: 4px;
   --radius-sm: 6px;
   --radius-md: 10px;
-  --radius-lg: 16px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
 
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.04);
+
+  /* Transitions */
   --transition: 180ms ease;
+  --transition-slow: 300ms ease;
+
+  /* Sidebar */
+  --sidebar-width: 240px;
 }
 
 html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -61,22 +102,26 @@ button {
   cursor: pointer;
 }
 
-input, textarea {
+input, textarea, select {
   font-family: var(--font-body);
 }
 
 ::selection {
-  background: var(--accent-amber-glow);
-  color: var(--accent-amber);
+  background: var(--accent-light);
+  color: var(--accent);
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--text-muted);
+  background: var(--border-hover);
   border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }

@@ -8,6 +8,12 @@ import AnalysisPanel from './components/AnalysisPanel'
 import EvaluationPanel from './components/EvaluationPanel'
 import styles from './App.module.css'
 
+const NAV_ITEMS = [
+  { id: 'overview',  label: 'Overview',     icon: '⊞' },
+  { id: 'feedback',  label: 'All Feedback',  icon: '☰' },
+  { id: 'analytics', label: 'Analytics',     icon: '⊟' },
+]
+
 export default function App() {
   const [history, setHistory] = useState([])
   const [latestResult, setLatestResult] = useState(null)
@@ -21,18 +27,13 @@ export default function App() {
   const [evalError, setEvalError] = useState('')
   const [showEval, setShowEval] = useState(false)
 
-  // Fetch real counts from DB on mount
+  const [activeNav, setActiveNav] = useState('feedback')
+
   useEffect(() => {
     axios.get('/api/analytics')
       .then((res) => setDbStats(res.data))
       .catch(() => {})
   }, [])
-
-  const sessionCounts = {
-    positive: history.filter((f) => f.sentiment === 'positive').length,
-    negative: history.filter((f) => f.sentiment === 'negative').length,
-    neutral:  history.filter((f) => f.sentiment === 'neutral').length,
-  }
 
   const stats = {
     total: dbStats.positive + dbStats.negative + dbStats.neutral,
@@ -79,57 +80,119 @@ export default function App() {
     }
   }
 
+  const pageTitle = NAV_ITEMS.find(n => n.id === activeNav)?.label || 'Dashboard'
+
   return (
     <div className={styles.app}>
-      <Header
-        stats={stats}
-        onAnalyze={handleAnalyze}
-        analyzing={analyzing}
-        onEvaluate={handleEvaluate}
-        evaluating={evalLoading}
-      />
-
-      <main className={styles.main}>
-        <div className={styles.left}>
-          <FeedbackForm onResult={handleResult} />
-          {latestResult && <SentimentResult result={latestResult} />}
+      {/* ── Sidebar ── */}
+      <aside className={styles.sidebar}>
+        <div className={styles.sidebarBrand}>
+          <div className={styles.brandLogo}>IA</div>
+          <div className={styles.brandText}>
+            <span className={styles.brandName}>InsightAI</span>
+            <span className={styles.brandSub}>Academic Intelligence</span>
+          </div>
         </div>
 
-        <div className={styles.right}>
-          <FeedbackHistory history={history} />
-          {history.length === 0 && (
-            <div className={styles.empty}>
-              <p className={styles.emptyText}>Submitted feedback will appear here.</p>
-            </div>
-          )}
+        <nav className={styles.sidebarNav}>
+          {NAV_ITEMS.map((item) => (
+            <button
+              key={item.id}
+              className={`${styles.navItem} ${activeNav === item.id ? styles.navItemActive : ''}`}
+              onClick={() => setActiveNav(item.id)}
+            >
+              <span className={styles.navIcon}>{item.icon}</span>
+              {item.label}
+            </button>
+          ))}
+        </nav>
+
+        <div className={styles.sidebarFooter}>
+          <button
+            className={styles.submitFeedbackBtn}
+            onClick={() => setActiveNav('feedback')}
+          >
+            Submit Feedback
+          </button>
+          <button className={styles.navItem} style={{ color: 'var(--text-muted)' }}>
+            <span className={styles.navIcon}>?</span>
+            Help Center
+          </button>
+          <button className={styles.navItem} style={{ color: 'var(--text-muted)' }}>
+            <span className={styles.navIcon}>◯</span>
+            Account
+          </button>
         </div>
-      </main>
+      </aside>
 
-      {analyzeError && (
-        <div className={styles.analyzeError}>{analyzeError}</div>
-      )}
+      {/* ── Main Shell ── */}
+      <div className={styles.shell}>
+        {/* Top bar */}
+        <div className={styles.topbar}>
+          <span className={styles.topbarTitle}>{pageTitle}</span>
+          <div className={styles.topbarRight}>
+            <span className={styles.topbarMeta}>Draft saved 2m ago</span>
+            <div className={styles.topbarIcon}>🔔</div>
+            <div className={styles.topbarIcon}>⚙</div>
+          </div>
+        </div>
 
-      {analysisResult && (
-        <AnalysisPanel
-          result={analysisResult}
-          onClose={() => setAnalysisResult(null)}
+        {/* Header with stats + actions */}
+        <Header
+          stats={stats}
+          onAnalyze={handleAnalyze}
+          analyzing={analyzing}
+          onEvaluate={handleEvaluate}
+          evaluating={evalLoading}
         />
-      )}
 
-      {showEval && (
-        <EvaluationPanel
-          result={evalResult}
-          loading={evalLoading}
-          error={evalError}
-          onClose={() => setShowEval(false)}
-        />
-      )}
+        {/* Main 2-col grid */}
+        <main className={styles.main}>
+          <div className={styles.left}>
+            <FeedbackForm onResult={handleResult} />
+            {latestResult && <SentimentResult result={latestResult} />}
+          </div>
 
-      <footer className={styles.footer}>
-        <span>Student Feedback Analyzer</span>
-        <span>·</span>
-        <span>Hackathon #15 — Education & Learning</span>
-      </footer>
+          <div className={styles.right}>
+            <FeedbackHistory history={history} />
+            {history.length === 0 && (
+              <div className={styles.empty}>
+                <p className={styles.emptyText}>Submitted feedback will appear here.</p>
+              </div>
+            )}
+          </div>
+        </main>
+
+        {analyzeError && (
+          <div className={styles.analyzeError}>{analyzeError}</div>
+        )}
+
+        {analysisResult && (
+          <div className={styles.panelWrap}>
+            <AnalysisPanel
+              result={analysisResult}
+              onClose={() => setAnalysisResult(null)}
+            />
+          </div>
+        )}
+
+        {showEval && (
+          <div className={styles.panelWrap}>
+            <EvaluationPanel
+              result={evalResult}
+              loading={evalLoading}
+              error={evalError}
+              onClose={() => setShowEval(false)}
+            />
+          </div>
+        )}
+
+        <footer className={styles.footer}>
+          <span>Student Feedback Analyzer</span>
+          <span>·</span>
+          <span>Hackathon #15 — Education &amp; Learning</span>
+        </footer>
+      </div>
     </div>
   )
 }

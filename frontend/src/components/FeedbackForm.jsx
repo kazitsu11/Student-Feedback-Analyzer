@@ -38,18 +38,18 @@ export default function FeedbackForm({ onResult }) {
   return (
     <section className={styles.section}>
       <div className={styles.sectionHeader}>
-        <h2 className={styles.sectionTitle}>Submit Feedback</h2>
-        <p className={styles.sectionDesc}>Enter a student's name and their qualitative feedback below.</p>
+        <h2 className={styles.sectionTitle}>Capture Observations</h2>
+        <p className={styles.sectionDesc}>Detail the feedback for systematic academic analysis.</p>
       </div>
 
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.field}>
-          <label className={styles.label} htmlFor="student">Student name</label>
+          <label className={styles.label} htmlFor="student">Student Identification</label>
           <input
             id="student"
             type="text"
             className={styles.input}
-            placeholder="e.g. Arjun Sharma"
+            placeholder="Enter student full name..."
             value={student}
             onChange={(e) => setStudent(e.target.value)}
             disabled={loading}
@@ -59,7 +59,7 @@ export default function FeedbackForm({ onResult }) {
 
         <div className={styles.field}>
           <div className={styles.labelRow}>
-            <label className={styles.label} htmlFor="feedback">Feedback</label>
+            <label className={styles.label} htmlFor="feedback">Feedback Narrative</label>
             <span className={`${styles.charCount} ${remaining < 50 ? styles.charWarn : ''}`}>
               {remaining} left
             </span>
@@ -67,32 +67,37 @@ export default function FeedbackForm({ onResult }) {
           <textarea
             id="feedback"
             className={styles.textarea}
-            placeholder="The course was well-structured and the examples were very clear..."
+            placeholder="Start typing the feedback details here..."
             value={feedback}
             onChange={(e) => {
               if (e.target.value.length <= charLimit) setFeedback(e.target.value)
             }}
             disabled={loading}
-            rows={5}
+            rows={7}
           />
         </div>
 
         {error && <p className={styles.error}>{error}</p>}
 
-        <button
-          type="submit"
-          className={styles.submitBtn}
-          disabled={loading}
-        >
-          {loading ? (
-            <>
-              <span className={styles.spinner} />
-              Analyzing…
-            </>
-          ) : (
-            'Analyze Feedback →'
-          )}
-        </button>
+        <div className={styles.submitRow}>
+          <button type="button" className={styles.attachBtn} disabled={loading}>
+            ⊕ Attach Transcript
+          </button>
+          <button
+            type="submit"
+            className={styles.submitBtn}
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <span className={styles.spinner} />
+                Analyzing…
+              </>
+            ) : (
+              '✦ Analyze & Submit'
+            )}
+          </button>
+        </div>
       </form>
     </section>
   )
