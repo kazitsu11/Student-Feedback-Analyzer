@@ -1,0 +1,115 @@
+.card {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: slideIn 0.25s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* sentiment color variants */
+.positive {
+  border-color: rgba(76, 175, 135, 0.3);
+  background: linear-gradient(135deg, var(--bg-card) 80%, var(--positive-bg));
+}
+
+.negative {
+  border-color: rgba(224, 92, 92, 0.3);
+  background: linear-gradient(135deg, var(--bg-card) 80%, var(--negative-bg));
+}
+
+.neutral {
+  border-color: rgba(123, 143, 186, 0.25);
+  background: linear-gradient(135deg, var(--bg-card) 80%, var(--neutral-bg));
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-amber);
+  background: var(--accent-amber-glow);
+  border: 1px solid rgba(232, 168, 56, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 0.2rem 0.55rem;
+}
+
+.date {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.sentimentRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  min-width: 28px;
+}
+
+.positive .icon { color: var(--positive); }
+.negative .icon { color: var(--negative); }
+.neutral  .icon { color: var(--neutral); }
+
+.sentimentLabel {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--text-primary);
+  font-weight: 400;
+}
+
+.sentimentDesc {
+  font-size: 0.825rem;
+  color: var(--text-secondary);
+  margin-top: 0.2rem;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.metaLabel {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.metaValue {
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
