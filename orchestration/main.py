@@ -11,6 +11,7 @@ if not os.getenv("ANTHROPIC_API_KEY"):
 
 from models import BatchAnalysisRequest, BatchAnalysisResult
 from pipeline import FeedbackPipeline
+from evaluate import EvaluationReport, run_evaluation
 
 app = FastAPI(title="Feedback Orchestration Service", version="1.0.0")
 
@@ -36,3 +37,9 @@ def analyze(request: BatchAnalysisRequest):
     if len(request.feedbacks) > 200:
         raise HTTPException(status_code=400, detail="Max 200 feedback items per request")
     return _pipeline.run(request.feedbacks)
+
+
+@app.get("/evaluate", response_model=EvaluationReport)
+def evaluate():
+    """Run the evaluation suite against the golden dataset and return metrics."""
+    return run_evaluation()

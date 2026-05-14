@@ -1,6 +1,6 @@
 import styles from './Header.module.css'
 
-export default function Header({ stats, onAnalyze, analyzing }) {
+export default function Header({ stats, onAnalyze, analyzing, onEvaluate, evaluating }) {
   return (
     <header className={styles.header}>
       <div className={styles.inner}>
@@ -20,21 +20,40 @@ export default function Header({ stats, onAnalyze, analyzing }) {
             <StatPill label="Negative" value={stats.negative} color="negative" />
           </div>
 
-          <button
-            className={`${styles.analyzeBtn} ${analyzing ? styles.analyzeBtnBusy : ''}`}
-            onClick={onAnalyze}
-            disabled={analyzing || stats.total === 0}
-            title={stats.total === 0 ? 'Submit at least one feedback first' : 'Run the 5-stage AI pipeline'}
-          >
-            {analyzing ? (
-              <>
-                <span className={styles.spinner} />
-                Analyzing…
-              </>
-            ) : (
-              'Run AI Analysis →'
-            )}
-          </button>
+          <div className={styles.btnRow}>
+            <button
+              className={`${styles.analyzeBtn} ${analyzing ? styles.analyzeBtnBusy : ''}`}
+              onClick={onAnalyze}
+              disabled={analyzing || stats.total === 0}
+              title={stats.total === 0 ? 'Submit at least one feedback first' : 'Run the 5-stage AI pipeline'}
+            >
+              {analyzing ? (
+                <>
+                  <span className={styles.spinner} />
+                  Analyzing…
+                </>
+              ) : (
+                'Run AI Analysis →'
+              )}
+            </button>
+
+            <button
+              className={`${styles.evaluateBtn} ${evaluating ? styles.analyzeBtnBusy : ''}`}
+              onClick={onEvaluate}
+              disabled={evaluating}
+              title="Run evaluation against the golden dataset"
+            >
+              {evaluating ? (
+                <>
+                  <span className={styles.spinner} />
+                  Evaluating…
+                </>
+              ) : (
+                '📊 Evaluate Pipeline'
+              )}
+            </button>
+          </div>
+
         </div>
       </div>
     </header>

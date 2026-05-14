@@ -5,6 +5,7 @@ import FeedbackForm from './components/FeedbackForm'
 import SentimentResult from './components/SentimentResult'
 import FeedbackHistory from './components/FeedbackHistory'
 import AnalysisPanel from './components/AnalysisPanel'
+import EvaluationPanel from './components/EvaluationPanel'
 import styles from './App.module.css'
 
 export default function App() {
@@ -14,6 +15,11 @@ export default function App() {
   const [analysisResult, setAnalysisResult] = useState(null)
   const [analyzing, setAnalyzing] = useState(false)
   const [analyzeError, setAnalyzeError] = useState('')
+
+  const [evalResult, setEvalResult] = useState(null)
+  const [evalLoading, setEvalLoading] = useState(false)
+  const [evalError, setEvalError] = useState('')
+  const [showEval, setShowEval] = useState(false)
 
   // Fetch real counts from DB on mount
   useEffect(() => {
@@ -58,12 +64,29 @@ export default function App() {
     }
   }
 
+  const handleEvaluate = async () => {
+    setShowEval(true)
+    setEvalLoading(true)
+    setEvalError('')
+    setEvalResult(null)
+    try {
+      const res = await axios.get('/api/evaluate')
+      setEvalResult(res.data)
+    } catch (err) {
+      setEvalError(err.response?.data?.message || 'Evaluation failed. Make sure the orchestration service is running.')
+    } finally {
+      setEvalLoading(false)
+    }
+  }
+
   return (
     <div className={styles.app}>
       <Header
         stats={stats}
         onAnalyze={handleAnalyze}
         analyzing={analyzing}
+        onEvaluate={handleEvaluate}
+        evaluating={evalLoading}
       />
 
       <main className={styles.main}>
@@ -90,6 +113,15 @@ export default function App() {
         <AnalysisPanel
           result={analysisResult}
           onClose={() => setAnalysisResult(null)}
+        />
+      )}
+
+      {showEval && (
+        <EvaluationPanel
+          result={evalResult}
+          loading={evalLoading}
+          error={evalError}
+          onClose={() => setShowEval(false)}
         />
       )}
 

@@ -6,7 +6,6 @@ from models import (
     SentimentResult, ActionableInsight, BatchAnalysisResult,
 )
 
-# Cached system prompt — sent once and reused across all 5 stages
 _SYSTEM = (
     "You are an expert educational data analyst. "
     "You analyze student feedback to help institutions improve. "
@@ -21,7 +20,6 @@ class FeedbackPipeline:
         self.client = anthropic.Anthropic()
         self._timings: dict = {}
 
-    # ------------------------------------------------------------------ helpers
 
     def _call(self, prompt: str) -> str:
         response = self.client.messages.create(
@@ -51,7 +49,6 @@ class FeedbackPipeline:
         self._timings[name] = round(time.time() - t0, 2)
         return result
 
-    # ------------------------------------------------------- stage 1: outliers
 
     def _detect_outliers(self, feedbacks: list[FeedbackItem]) -> list[dict]:
         items = [{"index": i, "student": f.student, "text": f.feedback}
@@ -76,7 +73,6 @@ Reason must be a short string when is_outlier is true, otherwise null."""
         results = self._parse(self._call(prompt))
         return results
 
-    # ---------------------------------------------------- stage 2: theme discovery
 
     def _discover_themes(self, feedbacks: list[FeedbackItem], outlier_map: dict) -> dict:
         valid = [f.feedback for i, f in enumerate(feedbacks)
@@ -103,7 +99,6 @@ Example format:
 
         return self._parse(self._call(prompt))
 
-    # ----------------------------------------------------- stage 3: sentiment
 
     def _analyze_sentiments(self, feedbacks: list[FeedbackItem], themes: dict) -> list[dict]:
         theme_names = list(themes.keys())
@@ -129,7 +124,6 @@ Return a JSON array."""
 
         return self._parse(self._call(prompt))
 
-    # ------------------------------------------------- stage 4: pattern synthesis
 
     def _synthesize_patterns(
         self,
@@ -160,7 +154,6 @@ Return a JSON array of 5–7 pattern strings."""
 
         return self._parse(self._call(prompt))
 
-    # ------------------------------------------------ stage 5: actionable insights
 
     def _generate_actions(
         self,
@@ -195,12 +188,10 @@ Return a JSON array:
 
         return self._parse(self._call(prompt))
 
-    # ----------------------------------------------------------------- main run
 
     def run(self, feedbacks: list[FeedbackItem]) -> BatchAnalysisResult:
         self._timings = {}
 
-        # Stage 1
         raw_outliers = self._timed(
             "1_outlier_detection",
             lambda: self._detect_outliers(feedbacks),
@@ -208,20 +199,17 @@ Return a JSON array:
         outlier_map = {r["index"]: r.get("is_outlier", False) for r in raw_outliers}
         outlier_reasons = {r["index"]: r.get("reason") for r in raw_outliers}
 
-        # Stage 2
         themes = self._timed(
             "2_theme_discovery",
             lambda: self._discover_themes(feedbacks, outlier_map),
         )
 
-        # Stage 3
         sentiment_rows = self._timed(
             "3_sentiment_analysis",
             lambda: self._analyze_sentiments(feedbacks, themes),
         )
         sentiment_by_idx = {r["index"]: r for r in sentiment_rows}
 
-        # Compile per-item results
         sentiment_counts = {"positive": 0, "negative": 0, "neutral": 0}
         theme_counts = {t: 0 for t in themes}
         analyses: list[FeedbackAnalysis] = []
@@ -255,7 +243,6 @@ Return a JSON array:
                 ),
             ))
 
-        # Stage 4
         patterns = self._timed(
             "4_pattern_synthesis",
             lambda: self._synthesize_patterns(
@@ -263,7 +250,6 @@ Return a JSON array:
             ),
         )
 
-        # Stage 5
         raw_actions = self._timed(
             "5_action_generation",
             lambda: self._generate_actions(patterns, theme_counts, sentiment_counts),

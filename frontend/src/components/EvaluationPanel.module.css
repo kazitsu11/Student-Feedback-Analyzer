@@ -1,0 +1,384 @@
+/* ══════════════════════════════════════════════════
+   EvaluationPanel.module.css
+   Dark, premium evaluation dashboard styling
+══════════════════════════════════════════════════ */
+
+.panel {
+  background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+  border: 1px solid #334155;
+  border-radius: 20px;
+  margin-top: 2rem;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1.5rem 1.75rem 1rem;
+  border-bottom: 1px solid #1e293b;
+}
+
+.headerLeft {}
+
+.title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0 0 0.2rem;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.closeBtn {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #94a3b8;
+  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.closeBtn:hover {
+  background: #ef4444;
+  color: #fff;
+  border-color: #ef4444;
+}
+
+/* ── Overview ── */
+.overview {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem 1.75rem;
+  border-bottom: 1px solid #1e293b;
+}
+
+/* Score ring */
+.ringWrap {
+  position: relative;
+  width: 136px;
+  height: 136px;
+  flex-shrink: 0;
+}
+.ringInner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.ringScore {
+  font-size: 1.9rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.ringGrade {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+.overviewStats { flex: 1; }
+
+.summaryText {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin: 0 0 1rem;
+}
+
+.chips {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.statChip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 0.5rem 0.9rem;
+  min-width: 90px;
+}
+.chipVal {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+.chipLbl {
+  font-size: 0.68rem;
+  color: #64748b;
+  margin-top: 2px;
+  text-align: center;
+}
+
+.chip_blue   { border-color: #3b82f6; }
+.chip_blue .chipVal { color: #60a5fa; }
+.chip_purple { border-color: #8b5cf6; }
+.chip_purple .chipVal { color: #a78bfa; }
+.chip_teal   { border-color: #14b8a6; }
+.chip_teal .chipVal { color: #2dd4bf; }
+.chip_amber  { border-color: #f59e0b; }
+.chip_amber .chipVal { color: #fbbf24; }
+
+/* ── Tabs ── */
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid #1e293b;
+  padding: 0 1.75rem;
+  overflow-x: auto;
+}
+
+.tab {
+  background: none;
+  border: none;
+  color: #64748b;
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab:hover { color: #94a3b8; }
+.tabActive {
+  color: #6366f1;
+  border-bottom-color: #6366f1;
+  font-weight: 600;
+}
+
+/* ── Tab content ── */
+.tabContent {
+  padding: 1.5rem 1.75rem;
+  min-height: 220px;
+}
+
+.section { }
+
+.sectionTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  margin: 0 0 1.2rem;
+}
+
+/* Metric bar */
+.metricRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+.metricLabel {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  width: 180px;
+  flex-shrink: 0;
+}
+.metricTrack {
+  flex: 1;
+  height: 8px;
+  background: #1e293b;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.metricFill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.8s ease;
+}
+.metricVal {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  width: 44px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Big stat */
+.bigStat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 1.5rem;
+}
+.bigNum {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #6366f1;
+  line-height: 1;
+}
+.bigLabel {
+  font-size: 0.82rem;
+  color: #64748b;
+}
+
+/* Tri stat */
+.triStat {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.triBox {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+}
+.triNum {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.triLbl {
+  display: block;
+  font-size: 0.72rem;
+  color: #64748b;
+  margin-top: 0.4rem;
+}
+
+/* Table */
+.tableWrap { overflow-x: auto; }
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+.table th {
+  color: #64748b;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #1e293b;
+}
+.table td {
+  color: #cbd5e1;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid #0f172a;
+}
+.table tr:last-child td { border-bottom: none; }
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  border-radius: 99px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.badge_positive { background: rgba(34,197,94,0.15); color: #4ade80; }
+.badge_negative { background: rgba(239,68,68,0.15);  color: #f87171; }
+.badge_neutral  { background: rgba(148,163,184,0.12); color: #94a3b8; }
+
+/* Hint */
+.hint {
+  font-size: 0.8rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Category chips */
+.catList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.catChip {
+  background: rgba(99,102,241,0.12);
+  color: #818cf8;
+  border: 1px solid rgba(99,102,241,0.3);
+  border-radius: 99px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* ── Loading ── */
+.loadingWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  gap: 1rem;
+}
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #1e293b;
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.loadingText {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  margin: 0;
+  text-align: center;
+}
+.loadingSubtext {
+  color: #475569;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+/* ── Error ── */
+.errorWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 2rem;
+  gap: 1rem;
+}
+.errorIcon { font-size: 2rem; }
+.errorText {
+  color: #f87171;
+  font-size: 0.85rem;
+  text-align: center;
+  margin: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .overview { flex-direction: column; align-items: flex-start; }
+  .triStat  { grid-template-columns: 1fr 1fr; }
+  .metricLabel { width: 120px; }
+}

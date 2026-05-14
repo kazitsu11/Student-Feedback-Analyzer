@@ -1,0 +1,122 @@
+[
+  {
+    "id": "eval_001",
+    "student": "Alice",
+    "feedback": "The faculty explains concepts very clearly and the lectures are engaging. I love this course!",
+    "expected_sentiment": "positive",
+    "expected_themes": ["Teaching Quality"],
+    "is_outlier": false
+  },
+  {
+    "id": "eval_002",
+    "student": "Bob",
+    "feedback": "Lab equipment is broken half the time and we can't complete our practicals. Very frustrating.",
+    "expected_sentiment": "negative",
+    "expected_themes": ["Lab Facilities"],
+    "is_outlier": false
+  },
+  {
+    "id": "eval_003",
+    "student": "Carol",
+    "feedback": "ok",
+    "expected_sentiment": "neutral",
+    "expected_themes": [],
+    "is_outlier": true
+  },
+  {
+    "id": "eval_004",
+    "student": "Dave",
+    "feedback": "The WiFi on campus is extremely slow and disconnects constantly during online exams, causing a lot of stress.",
+    "expected_sentiment": "negative",
+    "expected_themes": ["Infrastructure"],
+    "is_outlier": false
+  },
+  {
+    "id": "eval_005",
+    "student": "Eve",
+    "feedback": "asdfghjkl qwerty zxcvbnm random text here nothing useful",
+    "expected_sentiment": "neutral",
+    "expected_themes": [],
+    "is_outlier": true
+  },
+  {
+    "id": "eval_006",
+    "student": "Frank",
+    "feedback": "Placement support has been excellent. The career cell helped me land a great internship at a top company.",
+    "expected_sentiment": "positive",
+    "expected_themes": ["Placement & Career"],
+    "is_outlier": false
+  },
+  {
+    "id": "eval_007",
+    "student": "Grace",
+    "feedback": "The curriculum feels outdated. We are not learning industry-relevant skills and the syllabus hasn't been updated in years.",
+    "expected_sentiment": "negative",
+    "expected_themes": ["Curriculum"],
+    "is_outlier": false
+  },
+  {
+    "id": "eval_008",
+    "student": "Hank",
+    "feedback": "The canteen food is decent and the hostel facilities are satisfactory. Campus life is okay overall.",
+    "expected_sentiment": "neutral",
+    "expected_themes": ["Campus Facilities"],
+    "is_outlier": false
+  },
+  {
+    "id": "eval_009",
+    "student": "Irene",
+    "feedback": "BEST COLLEGE EVER!!!! 10/10 EVERYTHING IS PERFECT NO COMPLAINTS AT ALL LOVE IT",
+    "expected_sentiment": "positive",
+    "expected_themes": [],
+    "is_outlier": true
+  },
+  {
+    "id": "eval_010",
+    "student": "Jake",
+    "feedback": "The professor rushes through topics without checking if students understand. More interaction in class would help greatly.",
+    "expected_sentiment": "negative",
+    "expected_themes": ["Teaching Quality"],
+    "is_outlier": false
+  },
+  {
+    "id": "eval_011",
+    "student": "Karen",
+    "feedback": "Library resources are well-maintained and the staff is very helpful when we need research materials.",
+    "expected_sentiment": "positive",
+    "expected_themes": ["Campus Facilities"],
+    "is_outlier": false
+  },
+  {
+    "id": "eval_012",
+    "student": "Leo",
+    "feedback": "The internship guidance provided by the placement cell was mediocre. They could do a lot better with mock interviews.",
+    "expected_sentiment": "negative",
+    "expected_themes": ["Placement & Career"],
+    "is_outlier": false
+  },
+  {
+    "id": "eval_013",
+    "student": "Mia",
+    "feedback": "good",
+    "expected_sentiment": "positive",
+    "expected_themes": [],
+    "is_outlier": true
+  },
+  {
+    "id": "eval_014",
+    "student": "Nate",
+    "feedback": "Assignments are relevant and tests are fair. The grading system is transparent and I appreciate the feedback from professors.",
+    "expected_sentiment": "positive",
+    "expected_themes": ["Assessment & Grading"],
+    "is_outlier": false
+  },
+  {
+    "id": "eval_015",
+    "student": "Olivia",
+    "feedback": "The sports facilities and extracurricular activities are excellent. The annual fest was very well organized this year.",
+    "expected_sentiment": "positive",
+    "expected_themes": ["Campus Life"],
+    "is_outlier": false
+  }
+]

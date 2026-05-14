@@ -61,8 +61,14 @@
   flex-wrap: wrap;
 }
 
+.btnRow {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 .analyzeBtn {
-  align-self: flex-start;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -74,6 +80,7 @@
   font-size: 0.88rem;
   font-weight: 600;
   letter-spacing: 0.01em;
+  cursor: pointer;
   transition: opacity var(--transition), background var(--transition);
 }
 
@@ -82,6 +89,31 @@
 }
 
 .analyzeBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.evaluateBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: opacity var(--transition), background var(--transition);
+}
+
+.evaluateBtn:hover:not(:disabled) {
+  background: #4f46e5;
+}
+
+.evaluateBtn:disabled {
   opacity: 0.45;
   cursor: not-allowed;
 }
@@ -98,6 +130,11 @@
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
   flex-shrink: 0;
+}
+
+.evaluateBtn .spinner {
+  border-color: rgba(255,255,255,0.3);
+  border-top-color: #fff;
 }
 
 @keyframes spin {
