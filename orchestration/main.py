@@ -6,8 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv(dotenv_path=Path(__file__).resolve().parent.parent / ".env")
 
-if not os.getenv("ANTHROPIC_API_KEY"):
-    raise RuntimeError("ANTHROPIC_API_KEY is not set in environment")
+if not os.getenv("OPENAI_API_KEY"):
+    raise RuntimeError("OPENAI_API_KEY is not set in environment")
 
 from models import BatchAnalysisRequest, BatchAnalysisResult
 from pipeline import FeedbackPipeline

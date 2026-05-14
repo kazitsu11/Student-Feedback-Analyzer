@@ -1,6 +1,6 @@
 import json
 import time
-import anthropic
+import openai
 from models import (
     FeedbackItem, FeedbackAnalysis, OutlierInfo,
     SentimentResult, ActionableInsight, BatchAnalysisResult,
@@ -12,28 +12,25 @@ _SYSTEM = (
     "Always respond with valid JSON only — no markdown, no explanation, no extra text."
 )
 
-MODEL = "claude-haiku-4-5-20251001"
+MODEL = "gpt-4o-mini"
 
 
 class FeedbackPipeline:
     def __init__(self):
-        self.client = anthropic.Anthropic()
+        self.client = openai.OpenAI()
         self._timings: dict = {}
 
 
     def _call(self, prompt: str) -> str:
-        response = self.client.messages.create(
+        response = self.client.chat.completions.create(
             model=MODEL,
-            max_tokens=4096,
-            system=[{
-                "type": "text",
-                "text": _SYSTEM,
-                "cache_control": {"type": "ephemeral"},   # prompt caching
-            }],
-            messages=[{"role": "user", "content": prompt}],
-            extra_headers={"anthropic-beta": "prompt-caching-2024-07-31"},
+            messages=[
+                {"role": "system", "content": _SYSTEM},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.0
         )
-        return response.content[0].text.strip()
+        return response.choices[0].message.content.strip()
 
     def _parse(self, raw: str):
         text = raw.strip()
