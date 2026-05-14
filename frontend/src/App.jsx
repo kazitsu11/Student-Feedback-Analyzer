@@ -1,29 +1,70 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import Header from './components/Header'
 import FeedbackForm from './components/FeedbackForm'
 import SentimentResult from './components/SentimentResult'
 import FeedbackHistory from './components/FeedbackHistory'
+import AnalysisPanel from './components/AnalysisPanel'
 import styles from './App.module.css'
 
 export default function App() {
   const [history, setHistory] = useState([])
   const [latestResult, setLatestResult] = useState(null)
+  const [dbStats, setDbStats] = useState({ positive: 0, negative: 0, neutral: 0 })
+  const [analysisResult, setAnalysisResult] = useState(null)
+  const [analyzing, setAnalyzing] = useState(false)
+  const [analyzeError, setAnalyzeError] = useState('')
 
-  const stats = {
-    total: history.length,
+  // Fetch real counts from DB on mount
+  useEffect(() => {
+    axios.get('/api/analytics')
+      .then((res) => setDbStats(res.data))
+      .catch(() => {})
+  }, [])
+
+  const sessionCounts = {
     positive: history.filter((f) => f.sentiment === 'positive').length,
     negative: history.filter((f) => f.sentiment === 'negative').length,
     neutral:  history.filter((f) => f.sentiment === 'neutral').length,
   }
 
+  const stats = {
+    total: dbStats.positive + dbStats.negative + dbStats.neutral,
+    positive: dbStats.positive,
+    negative: dbStats.negative,
+    neutral:  dbStats.neutral,
+  }
+
   const handleResult = (data) => {
     setLatestResult(data)
     setHistory((prev) => [...prev, data])
+    setDbStats((prev) => ({
+      ...prev,
+      [data.sentiment]: (prev[data.sentiment] || 0) + 1,
+    }))
+  }
+
+  const handleAnalyze = async () => {
+    setAnalyzing(true)
+    setAnalyzeError('')
+    setAnalysisResult(null)
+    try {
+      const res = await axios.get('/api/analyze')
+      setAnalysisResult(res.data)
+    } catch (err) {
+      setAnalyzeError(err.response?.data?.message || 'Analysis failed. Make sure the orchestration service is running.')
+    } finally {
+      setAnalyzing(false)
+    }
   }
 
   return (
     <div className={styles.app}>
-      <Header stats={stats} />
+      <Header
+        stats={stats}
+        onAnalyze={handleAnalyze}
+        analyzing={analyzing}
+      />
 
       <main className={styles.main}>
         <div className={styles.left}>
@@ -35,13 +76,22 @@ export default function App() {
           <FeedbackHistory history={history} />
           {history.length === 0 && (
             <div className={styles.empty}>
-              <p className={styles.emptyText}>
-                Submitted feedback will appear here.
-              </p>
+              <p className={styles.emptyText}>Submitted feedback will appear here.</p>
             </div>
           )}
         </div>
       </main>
+
+      {analyzeError && (
+        <div className={styles.analyzeError}>{analyzeError}</div>
+      )}
+
+      {analysisResult && (
+        <AnalysisPanel
+          result={analysisResult}
+          onClose={() => setAnalysisResult(null)}
+        />
+      )}
 
       <footer className={styles.footer}>
         <span>Student Feedback Analyzer</span>

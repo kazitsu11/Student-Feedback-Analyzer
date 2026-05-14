@@ -1,24 +1,27 @@
-require('dotenv').config();
-const mongoose=require("mongoose")
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 const express = require("express");
-const connectDB=require("./src/config/db")
-const analyticsRoutes=require("./src/routes/analyticsRoutes")
-connectDB()
+const cors = require("cors");
+const connectDB = require("./src/config/db");
+const analyticsRoutes = require("./src/routes/analyticsRoutes");
+const feedbackRoutes = require("./src/routes/feedbackRoutes");
+const orchestrationRoutes = require("./src/routes/orchestrationRoutes");
+
+connectDB();
 
 const app = express();
+app.use(cors());
 app.use(express.json());
-app.use("/api",analyticsRoutes)
 
 app.get("/", (req, res) => {
-  res.json({
-    message: "Backend running Successfully...",
-  });
+  res.json({ message: "Backend running Successfully..." });
 });
 
-const feedbackRoutes=require("./src/routes/feedbackRoutes")
-app.use("/api",feedbackRoutes);
+app.use("/api", analyticsRoutes);
+app.use("/api", feedbackRoutes);
+app.use("/api", orchestrationRoutes);
 
-const Port=5000
+const Port = process.env.PORT || 5000;
 app.listen(Port, () => {
   console.log(`Server running on port ${Port}`);
 });
