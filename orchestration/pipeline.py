@@ -12,12 +12,12 @@ _SYSTEM = (
     "Always respond with valid JSON only — no markdown, no explanation, no extra text."
 )
 
-MODEL = "gpt-4o-mini"
+MODEL = "mistral-small-latest"
 
 
 class FeedbackPipeline:
     def __init__(self):
-        self.client = openai.OpenAI()
+        self.client = openai.OpenAI(base_url="https://api.mistral.ai/v1")
         self._timings: dict = {}
 
 
@@ -160,8 +160,7 @@ Return a JSON array of 5–7 pattern strings."""
     ) -> list[dict]:
         prompt = f"""STAGE 5 — Actionable Insight Generation
 
-Based on the analysis below, generate 4–6 specific, prioritised recommendations
-for the institution to act on.
+Generate 4–6 specific, prioritised recommendations for the institution.
 
 Key patterns:
 {json.dumps(patterns)}
@@ -169,21 +168,44 @@ Key patterns:
 Theme distribution: {json.dumps(theme_counts)}
 Sentiment: {json.dumps(sentiment_counts)}
 
-Each recommendation must be concrete, not vague.
-BAD: "Improve faculty performance"
-GOOD: "Introduce peer observation sessions for faculty, focusing on pacing and clarity of explanation"
+CRITICAL OUTPUT FORMAT — return ONLY a JSON array of OBJECTS (not strings).
+Each object MUST have exactly these four fields:
+  - "priority":        one of "high", "medium", "low"
+  - "category":        short string, e.g. "Teaching Quality"
+  - "suggestion":      one specific concrete action (NOT vague)
+  - "expected_impact": what improvement this will create
 
-Return a JSON array:
+Example of CORRECT output:
 [
-  {{
-    "priority": "high",
-    "category": "Teaching Quality",
-    "suggestion": "Specific action to take...",
-    "expected_impact": "What measurable improvement this will create..."
-  }}
-]"""
+  {{"priority":"high","category":"Teaching Quality","suggestion":"Introduce peer observation sessions for faculty focused on pacing","expected_impact":"Improved clarity ratings within one semester"}},
+  {{"priority":"medium","category":"Labs","suggestion":"Replace outdated lab computers in CS Block-B","expected_impact":"Reduced student complaints about equipment failures"}}
+]
 
-        return self._parse(self._call(prompt))
+INCORRECT (do NOT do this):
+["Improve faculty", "Fix labs"]
+
+Return ONLY the JSON array of objects, nothing else."""
+
+        raw = self._parse(self._call(prompt))
+
+        # Defensive coercion — Mistral sometimes returns plain strings
+        coerced: list[dict] = []
+        for item in raw if isinstance(raw, list) else []:
+            if isinstance(item, dict):
+                coerced.append({
+                    "priority": item.get("priority", "medium"),
+                    "category": item.get("category", "General"),
+                    "suggestion": item.get("suggestion", ""),
+                    "expected_impact": item.get("expected_impact", ""),
+                })
+            elif isinstance(item, str):
+                coerced.append({
+                    "priority": "medium",
+                    "category": "General",
+                    "suggestion": item,
+                    "expected_impact": "",
+                })
+        return coerced
 
 
     def run(self, feedbacks: list[FeedbackItem]) -> BatchAnalysisResult:

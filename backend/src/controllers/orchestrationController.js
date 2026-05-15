@@ -23,6 +23,7 @@ const analyzeAll = async (req, res) => {
     const result = await analyzeWithOrchestration(payload);
     res.json(result);
   } catch (error) {
+    console.error("[orchestration] analyze failed:", error);
     res.status(500).json({ message: error.message });
   }
 };
